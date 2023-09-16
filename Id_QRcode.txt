@@ -1,0 +1,3 @@
+*Add the QR code ID that will be used for landing.*
+
+111111   example  id_Qrcode 

@@ -9,10 +9,13 @@ def euclideanDistance(x, y, x1, y1):
     euclideanDist = math.sqrt((x1 - x) ** 2 + (y1 - y) ** 2)
     return euclideanDist
 
+def calculate_distance(real_object_size, focal_length, object_size_in_image):
+    distance = (real_object_size * focal_length) / object_size_in_image
+    return distance
+
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
-
 
 
 with open('Id_QRcode.txt') as f:
@@ -46,7 +49,15 @@ while True:
         x1, y1 = x + w, y + h
         qrWidth = euclideanDistance(x, y, x1, y1)
         
+        focal_length = 900 
+        real_object_size = 6.5
+        object_size_in_image = qrWidth  
+
+      
         
+        distance = calculate_distance(real_object_size, focal_length, object_size_in_image)
+        distance_rounded = round(distance, 2)
+
         # Calculate the center of the QR code.
         center_x = int((x + x1) / 2)
         center_y = int((y + y1) / 2)
@@ -55,10 +66,13 @@ while True:
         cv2.circle(img, (center_x, center_y), 5, (255, 0, 0), -1)
 
         
-        cv2.putText(img, f"Center: ({center_x}, {center_y})", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-
+        cv2.putText(img, f"Distance: {distance_rounded} cm", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        
+        
+        print(f"Distância da câmera ao objeto: {distance} cm")
       
         print("Center:", center_x, center_y)
+        print("QR_Width:", qrWidth)
 
     cv2.imshow('Result', img)
     key = cv2.waitKey(1)

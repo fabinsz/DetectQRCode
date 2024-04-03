@@ -15,7 +15,7 @@ cap.set(4, 480)
 
 
 
-with open('Indoor/Testes Fábio/detecçaoQRcode/Id_QRcode.txt') as f:
+with open('Id_QRcode.txt') as f:
     myDatalist = f.read().splitlines()
 
 while True: 
